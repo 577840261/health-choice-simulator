@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>健康选择模拟器</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>健康选择模拟器</h1>
+        <nav>
+            <button class="tab-btn active" data-tab="smoking">戒烟/减酒收益计算器</button>
+            <button class="tab-btn" data-tab="exercise">运动习惯效益器</button>
+        </nav>
+    </header>
+
+    <main>
+        <!-- 戒烟/减酒收益计算器 -->
+        <section id="smoking-tab" class="tab-content active">
+            <h2>戒烟/减酒收益计算器</h2>
+            <div class="calculator-container">
+                <div class="input-section">
+                    <div class="form-group">
+                        <label for="habit-type">选择习惯类型:</label>
+                        <select id="habit-type">
+                            <option value="smoking">吸烟</option>
+                            <option value="drinking">饮酒</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group smoking-specific">
+                        <label for="cigarettes-per-day">每天吸烟数量 (支):</label>
+                        <input type="number" id="cigarettes-per-day" min="0" value="10">
+                    </div>
+
+                    <div class="form-group smoking-specific">
+                        <label for="cigarette-price">每包香烟价格 (元):</label>
+                        <input type="number" id="cigarette-price" min="0" value="25">
+                    </div>
+
+                    <div class="form-group smoking-specific">
+                        <label for="cigarettes-per-pack">每包香烟数量 (支):</label>
+                        <input type="number" id="cigarettes-per-pack" min="1" value="20">
+                    </div>
+
+                    <div class="form-group drinking-specific" style="display: none;">
+                        <label for="drinks-per-day">每天饮酒量 (毫升):</label>
+                        <input type="number" id="drinks-per-day" min="0" value="200">
+                    </div>
+
+                    <div class="form-group drinking-specific" style="display: none;">
+                        <label for="drink-price">每升价格 (元):</label>
+                        <input type="number" id="drink-price" min="0" value="50">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="quit-period">计划戒断/减少时长 (月):</label>
+                        <input type="number" id="quit-period" min="1" value="12">
+                    </div>
+
+                    <button id="calculate-smoking" class="calculate-btn">计算收益</button>
+                </div>
+
+                <div class="results-section">
+                    <h3>收益结果</h3>
+                    <!-- 新增：进度跟踪卡片 -->
+                    <div class="progress-card">
+                        <h4>目标进度</h4>
+                        <div class="progress-container">
+                            <div class="progress-bar" id="quit-progress-bar"></div>
+                        </div>
+                        <div class="progress-stats">
+                            <span id="progress-days">已坚持: 0 天</span>
+                            <span id="progress-percentage">0%</span>
+                        </div>
+                        <button id="reset-progress" class="small-btn">重置进度</button>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">预计节省金额:</span>
+                        <span id="money-saved" class="result-value">--</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">预计寿命增加:</span>
+                        <span id="life-increase" class="result-value">--</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">肺癌风险降低:</span>
+                        <span id="cancer-risk" class="result-value">--</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">心脏病风险降低:</span>
+                        <span id="heart-risk" class="result-value">--</span>
+                    </div>
+
+                    <div class="chart-container">
+                        <canvas id="risk-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 运动习惯效益器 -->
+        <section id="exercise-tab" class="tab-content">
+            <h2>运动习惯效益器</h2>
+            <div class="calculator-container">
+                <div class="input-section">
+                    <div class="form-group">
+                        <label for="exercise-type">运动类型:</label>
+                        <select id="exercise-type">
+                            <option value="walking">步行</option>
+                            <option value="jogging">慢跑</option>
+                            <option value="cycling">骑自行车</option>
+                            <option value="swimming">游泳</option>
+                            <option value="weight_training">力量训练</option>
+                            <!-- 新增运动类型 -->
+                            <option value="yoga">瑜伽</option>
+                            <option value="jumping_rope">跳绳</option>
+                            <option value="basketball">篮球</option>
+                            <option value="badminton">羽毛球</option>
+                            <option value="elliptical">椭圆机</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exercise-duration">每次运动时长 (分钟):</label>
+                        <input type="number" id="exercise-duration" min="5" value="30">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exercise-frequency">每周运动次数:</label>
+                        <input type="number" id="exercise-frequency" min="1" max="7" value="3">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="user-weight">您的体重 (公斤):</label>
+                        <input type="number" id="user-weight" min="30" value="70">
+                    </div>
+
+                    <button id="calculate-exercise" class="calculate-btn">计算效益</button>
+                </div>
+
+                <div class="results-section">
+                    <h3>运动效益结果</h3>
+                    <div class="result-item">
+                        <span class="result-label">每次运动消耗卡路里:</span>
+                        <span id="calories-burned" class="result-value">--</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">每周运动消耗卡路里:</span>
+                        <span id="weekly-calories" class="result-value">--</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">心血管疾病风险降低:</span>
+                        <span id="cardio-risk" class="result-value">--</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">心情改善概率:</span>
+                        <span id="mood-improvement" class="result-value">--</span>
+                    </div>
+
+                    <div class="chart-container">
+                        <canvas id="exercise-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>健康选择模拟器 - 所有计算结果仅供参考，不构成医疗建议</p>
+        <!-- 新增：设计者和开发者信息 -->
+        <div class="credits">
+            <p>设计者: 亍幵</p>
+            <p>开发者: 亍幵</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
